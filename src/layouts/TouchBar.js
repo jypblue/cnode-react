@@ -2,7 +2,7 @@
 import React from 'react';
 
 export const TouchBar = (props) => {
-  const touchBarShow = props.touchBarShow;
+  //const touchBarShow = props.touchBarShow;
   const statusHeight = props.statusHeight || '68';
   const statusBarColor = props.statusBarColor || '#fff';
   return (

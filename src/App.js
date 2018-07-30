@@ -17,7 +17,7 @@ class App extends Component {
       <div className="cnd-app">
         <StatusBar />
         <Main/>
-        <TabBar/>
+        <TabBar />
       </div>
     );
   }
