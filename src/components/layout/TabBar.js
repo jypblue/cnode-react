@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { TabBar } from 'antd-mobile';
 import TouchBar from './TouchBar';
+import './tabbar.scss'
 
 const barArr = [{
     icon: '',
@@ -36,6 +37,8 @@ const barArr = [{
     url: '/me',
   }
 ]
+
+
 
 class App extends Component {
   constructor(props) {
