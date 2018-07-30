@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import StatusBar from "./components/layout/StatusBar";
-import TabBar from './components/layout/TabBar';
+import StatusBar from "./layouts/StatusBar";
+import TabBar from './layouts/TabBar';
 import Main from './router';
-import './style/main.scss';
+import './styles/main.scss';
 
 class App extends Component {
   constructor(props) {

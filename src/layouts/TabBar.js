@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { TabBar } from 'antd-mobile';
 import TouchBar from './TouchBar';
-import './tabbar.scss'
+import './TabBar.scss'
 
 const barArr = [{
     icon: '',
