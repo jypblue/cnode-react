@@ -2,35 +2,34 @@ import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { TabBar } from 'antd-mobile';
 import TouchBar from './TouchBar';
+import '../assets/fonts/iconfont.css';
 import './TabBar.scss'
 
 const barArr = [{
-    icon: '',
-    selectedIcon:'',
+    icon: 'iconfont icon-home',
     title: '阅读',
     name: 'Home',
     url: '/',
   },{
-    icon: '',
-    selectedIcon:'',
+    icon: 'iconfont icon-search',
     title: '发现',
     name: 'Discover',
     url: '/discover',
   },
   {
-    icon: '',
+    icon: 'iconfont icon-publish',
     selectedIcon:'',
     title: '发布',
     name: 'Publish',
     url: '/publish',
   },{
-    icon: '',
+    icon: 'iconfont icon-notice',
     selectedIcon:'',
     title: '消息',
     name: 'Notice',
     url: '/notice',
   },{
-    icon: '',
+    icon: 'iconfont icon-me',
     selectedIcon:'',
     title: '我',
     name: 'Me',
@@ -69,16 +68,10 @@ class App extends Component {
             <TabBar.Item
               title={item.title}
               key={i}
-              icon={<div style={{
-                width: '22px',
-                height: '22px',
-                background: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat' }}
+              icon={<div className={item.icon}
               />
               }
-              selectedIcon={<div style={{
-                width: '22px',
-                height: '22px',
-                background: 'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat' }}
+              selectedIcon={<div className={item.icon}
               />
               }
               selected={this.state.selectedTab === item.name}
