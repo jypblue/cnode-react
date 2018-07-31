@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tabs } from 'antd-mobile';
+import { Tabs, NavBar, ActivityIndicator } from 'antd-mobile';
 import TopicList from './TopicList';
 import './home.scss';
 
@@ -35,33 +35,50 @@ class TopicHome extends Component {
           tab: 'job'
         },
       ],
-      curTopic: null
+      curTopic: null,
+      isLoading: false
     };
+
+    this.handleTabsChange = this.handleTabsChange.bind(this);
+    this.handleIsLoading = this.handleIsLoading.bind(this);
   }
 
   handleTabsChange(tab, index) {
     this.setState({
       curTopic: tab,
-      curTabIndex: index
+      curTabIndex: index,
+      isLoading: false
+    });
+  }
+
+  handleIsLoading(isLoading) {
+    this.setState({
+      isLoading
     });
   }
 
   render() {
     return (
       <div className="cnd-home">
+        <NavBar mode="dark">话题</NavBar>
         <Tabs tabs={this.state.topicTabs}
           renderTabBar={props => <Tabs.DefaultTabBar {...props} page={3} />}
           initialPage={this.state.curTabIndex}
-          onChange={this.handleTabsChange.bind(this)}
+          onChange={this.handleTabsChange}
         >
           {
             (tab) => {
               return (
-                <TopicList data={tab} />
+                <TopicList data={tab} onIsLoading={this.handleIsLoading} />
               );
             }
           }
         </Tabs>
+        <ActivityIndicator
+          toast
+          text="Loading..."
+          animating={this.state.isLoading}
+        />
       </div>
     );
   }

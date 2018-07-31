@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import { NavBar } from 'antd-mobile';
 
-
-class App extends Component {
+class Discover extends Component {
   render() {
     return (
-      <div className="cnd-home">
-        discover
+      <div className="cnd-discover">
+        <NavBar mode="dark">发现</NavBar>
+
       </div>
     );
   }
 }
 
-export default App;
+export default Discover;

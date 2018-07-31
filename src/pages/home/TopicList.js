@@ -14,6 +14,7 @@ class TopicList extends Component {
         limit: 10,
         mdrender: false,
       },
+      isLoading: false
     };
 
   }
@@ -27,8 +28,13 @@ class TopicList extends Component {
     // this.fnGetTopics();
   }
 
+  handleIsLoading(isLoading) {
+    this.props.onIsLoading(isLoading);
+  }
+
   async fnGetTopics() {
     try {
+      this.handleIsLoading(true);
       const params = {
         ...this.state.topicParams
       };
@@ -36,9 +42,11 @@ class TopicList extends Component {
       console.log('topics:', result.data);
       if (result.success) {
         this.setState({ topicArr: result.data });
+        this.handleIsLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      this.handleIsLoading(false);
+      throw new Error(error);
     }
   }
 
