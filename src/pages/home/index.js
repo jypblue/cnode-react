@@ -1,46 +1,70 @@
 import React, { Component } from 'react';
-import {
-  getTopics
-} from './api';
+import { Tabs } from 'antd-mobile';
+import TopicList from './TopicList';
+import './home.scss';
 
-class App extends Component {
+class TopicHome extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topicParams: {
-        page: 1,
-        tab: 'ask',
-        limit: 10,
-        mdrender: true,
-      },
-      topicArr: []
+      curTabIndex: 0,
+      topicTabs: [
+        {
+          title: '全部',
+          sub: 0,
+          tab: ''
+        },
+        {
+          title: '精华',
+          sub: 1,
+          tab: 'good'
+        },
+        {
+          title: '问答',
+          sub: 2,
+          tab: 'ask'
+        },
+        {
+          title: '分享',
+          sub: 3,
+          tab: 'share'
+        },
+        {
+          title: '招聘',
+          sub: 4,
+          tab: 'job'
+        },
+      ],
+      curTopic: null
     };
   }
 
-  componentDidMount() {
-    this.fnGetTopics();
+  handleTabsChange(tab, index) {
+    this.setState({
+      curTopic: tab,
+      curTabIndex: index
+    });
   }
-
-  async fnGetTopics() {
-    try {
-      const params = {
-        ...this.state.topicParams
-      };
-      const result = await getTopics(params);
-      console.log(result);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
 
   render() {
     return (
       <div className="cnd-home">
-        home
+        <Tabs tabs={this.state.topicTabs}
+          renderTabBar={props => <Tabs.DefaultTabBar {...props} page={3} />}
+          initialPage={this.state.curTabIndex}
+          onChange={this.handleTabsChange.bind(this)}
+        >
+          {
+            (tab) => {
+              return (
+                <TopicList data={tab} />
+              );
+            }
+          }
+        </Tabs>
       </div>
     );
   }
 }
 
-export default App;
+export default TopicHome;
