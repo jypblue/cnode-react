@@ -12,7 +12,7 @@ import Home from '../pages/home';
 import Discover from '../pages/discover';
 import Publish from '../pages/publish';
 import Notice from '../pages/notice';
-import Me from '../pages/me'
+import Me from '../pages/me';
 
 // function Loading() {
 //   return <ActivityIndicator
@@ -34,14 +34,14 @@ import Me from '../pages/me'
 const Main = () => (
   <div>
     <Switch>
-      <Route exact path='/' component={ Home } />
-      <Route path='/discover' component={ Discover } />
-      <Route path='/publish' component={ Publish } />
-      <Route path='/notice' component={ Notice } />
-      <Route path='/me' component={ Me } />
+      <Route exact path="/" component={Home} />
+      <Route path="/discover" component={Discover} />
+      <Route path="/publish" component={Publish} />
+      <Route path="/notice" component={Notice} />
+      <Route path="/me" component={Me} />
     </Switch>
   </div>
-)
+);
 
 
 export default Main;

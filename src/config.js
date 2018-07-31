@@ -1,8 +1,3 @@
 export default {
-  tabBar: [{
-    icon: '',
-    title: '',
-    selectedIcon:'',
-
-  }]
-}
+  api: 'https://cnodejs.org/api/v1'
+};

@@ -1,41 +1,43 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 import { TabBar } from 'antd-mobile';
 import TouchBar from './TouchBar';
 import '../assets/fonts/iconfont.css';
-import './TabBar.scss'
+import './TabBar.scss';
 
 const barArr = [{
-    icon: 'iconfont icon-home',
-    title: '阅读',
-    name: 'Home',
-    url: '/',
-  },{
-    icon: 'iconfont icon-search',
-    title: '发现',
-    name: 'Discover',
-    url: '/discover',
-  },
-  {
-    icon: 'iconfont icon-publish',
-    selectedIcon:'',
-    title: '发布',
-    name: 'Publish',
-    url: '/publish',
-  },{
-    icon: 'iconfont icon-notice',
-    selectedIcon:'',
-    title: '消息',
-    name: 'Notice',
-    url: '/notice',
-  },{
-    icon: 'iconfont icon-me',
-    selectedIcon:'',
-    title: '我',
-    name: 'Me',
-    url: '/me',
-  }
-]
+  icon: 'iconfont icon-home',
+  selectedIcon: '',
+  title: '阅读',
+  name: 'Home',
+  url: '/',
+}, {
+  icon: 'iconfont icon-search',
+  selectedIcon: '',
+  title: '发现',
+  name: 'Discover',
+  url: '/discover',
+},
+{
+  icon: 'iconfont icon-publish',
+  selectedIcon: '',
+  title: '发布',
+  name: 'Publish',
+  url: '/publish',
+}, {
+  icon: 'iconfont icon-notice',
+  selectedIcon: '',
+  title: '消息',
+  name: 'Notice',
+  url: '/notice',
+}, {
+  icon: 'iconfont icon-me',
+  selectedIcon: '',
+  title: '我',
+  name: 'Me',
+  url: '/me',
+}
+];
 
 
 
@@ -45,7 +47,7 @@ class App extends Component {
     this.state = {
       selectedTab: 'Home',
       hidden: false,
-    }
+    };
   }
 
   handleTabBarClick(item) {
@@ -63,24 +65,22 @@ class App extends Component {
           tintColor="#33A3F4"
           barTintColor="white"
           hidden={this.state.hidden}
-          >
-          { barArr.map((item, i) =>
+        >
+          {barArr.map((item, i) =>
             <TabBar.Item
               title={item.title}
               key={i}
-              icon={<div className={item.icon}
-              />
+              icon={<div className={item.icon} />
               }
-              selectedIcon={<div className={item.icon}
-              />
+              selectedIcon={<div className={item.icon} />
               }
               selected={this.state.selectedTab === item.name}
-              onPress={ this.handleTabBarClick.bind(this, item) }
+              onPress={this.handleTabBarClick.bind(this, item)}
             >
             </TabBar.Item>
           )}
         </TabBar>
-        <TouchBar/>
+        <TouchBar />
       </div>
     );
   }

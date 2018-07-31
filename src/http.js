@@ -1,10 +1,9 @@
 import axios from 'axios';
 import qs from 'qs';
-
 import config from './config';
 
-
 // axios 全局配置
+axios.defaults.baseURL = config.api;
 axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.withCredentials = true;
 axios.defaults.responseType = 'json';
