@@ -60,7 +60,12 @@ class TopicHome extends Component {
   render() {
     return (
       <div className="cnd-home">
-        <NavBar mode="dark">话题</NavBar>
+        <NavBar mode="dark"
+
+          rightContent={
+            [<ActivityIndicator key={0} animating={this.state.isLoading} />]
+          }
+        >主题</NavBar>
         <Tabs tabs={this.state.topicTabs}
           renderTabBar={props => <Tabs.DefaultTabBar {...props} page={3} />}
           initialPage={this.state.curTabIndex}
@@ -74,11 +79,6 @@ class TopicHome extends Component {
             }
           }
         </Tabs>
-        <ActivityIndicator
-          toast
-          text="Loading..."
-          animating={this.state.isLoading}
-        />
       </div>
     );
   }
