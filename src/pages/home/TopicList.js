@@ -13,12 +13,13 @@ class TopicList extends Component {
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
-
+    // console.log(document.documentElement.clientHeight);
+    const hei = document.documentElement.clientHeight - 138;
     this.state = {
       dataSource,
       refreshing: true,
       isLoading: true,
-      height: document.documentElement.clientHeight - 72,
+      height: hei,
       useBodyScroll: false,
     };
 
