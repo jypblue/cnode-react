@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { debounce } from 'lodash';
-import request from '@/http';
 import { PullToRefresh, ListView } from 'antd-mobile';
-import TopicItem from './TopicItem';
+import request from '@/http';
+import TopicListItem from './TopicListItem';
 // const data = [];
 let pageIndex = 1;
 let topicArr = [];
@@ -22,7 +22,6 @@ class TopicList extends Component {
       height: hei,
       useBodyScroll: false,
     };
-
   }
 
 
@@ -132,7 +131,7 @@ class TopicList extends Component {
     );
     const row = (rowData, sectionID, rowID) => {
       return (
-        <TopicItem key={rowID} data={rowData} />
+        <TopicListItem key={rowID} data={rowData} />
       );
     };
 

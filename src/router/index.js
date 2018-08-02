@@ -14,6 +14,8 @@ import Publish from '../pages/publish';
 import Notice from '../pages/notice';
 import Me from '../pages/me';
 
+import TopicDetail from '../pages/home/TopicDetail';
+
 // function Loading() {
 //   return <ActivityIndicator
 //           toast
@@ -35,6 +37,8 @@ const Main = () => (
   <div>
     <Switch>
       <Route exact path="/" component={Home} />
+      <Route exact path="/topics" component={Home} />
+      <Route exact path="/topic/:id" component={TopicDetail} />
       <Route path="/discover" component={Discover} />
       <Route path="/publish" component={Publish} />
       <Route path="/notice" component={Notice} />

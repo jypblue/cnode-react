@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import Truncate from 'react-truncate';
 import {
   formatTopicTab
@@ -11,12 +12,20 @@ class TopicItem extends Component {
     this.state = {
     };
     console.log(props.data);
+    this.handleTopicItemClick = this.handleTopicItemClick.bind(this);
   }
 
+  // 跳转到详情页
+  handleTopicItemClick() {
+    const item = this.props.data;
+    console.log('topicItem:', item);
+    const url = `topic/${item.id}`;
+    this.props.history.push(url);
+  }
   render() {
     const item = this.props.data;
     return (
-      <div className="cnd-topic-item">
+      <div className="cnd-topic-item" onClick={this.handleTopicItemClick}>
         <div className="cnd-topic-item__head flex flex-pack-justify">
           <div className="cnd-topic-item__author">
             <img src={item.author.avatar_url} className="cnd-topic-item__avatar" alt="" />
@@ -55,4 +64,4 @@ class TopicItem extends Component {
   }
 }
 
-export default TopicItem;
+export default withRouter(TopicItem);
