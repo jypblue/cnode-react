@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { debounce } from 'lodash';
 import request from '@/http';
 import { PullToRefresh, ListView } from 'antd-mobile';
 import TopicItem from './TopicItem';
 // const data = [];
 let pageIndex = 1;
+let topicArr = [];
 class TopicList extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +34,7 @@ class TopicList extends Component {
     if (this.state.useBodyScroll) {
       document.body.style.overflow = 'auto';
     } else {
-      // document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
     }
   }
 
@@ -49,8 +51,9 @@ class TopicList extends Component {
       console.log('topics:', result.data);
       if (result.success) {
         const data = result.data;
+        topicArr = [].concat(topicArr, data);
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(data),
+          dataSource: this.state.dataSource.cloneWithRows(topicArr),
           refreshing: false,
           isLoading: false,
         });
@@ -75,10 +78,12 @@ class TopicList extends Component {
     }
     console.log('reach end', event);
     this.setState({ isLoading: true });
-    window.setTimeout(() => {
-      this.fnReGetCurTopic(++pageIndex);
-    }, 800);
+    this.fnReGetCurTopic(++pageIndex);
   };
+
+  handleEndReached = debounce(() => {
+    this.onEndReached();
+  }, 300);
 
   // 初始赋值
   async fnInitGetTopics() {
@@ -95,8 +100,9 @@ class TopicList extends Component {
       this.handleIsTabLoading(false);
       if (result.success) {
         const data = result.data;
+        topicArr = [].concat(data);
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(data),
+          dataSource: this.state.dataSource.cloneWithRows(topicArr),
           refreshing: false,
           isLoading: false,
         });
@@ -144,15 +150,12 @@ class TopicList extends Component {
           useBodyScroll={this.state.useBodyScroll}
           style={this.state.useBodyScroll ? {} : {
             height: this.state.height,
-            border: '1px solid #ddd',
-            margin: '5px 0',
           }}
           pullToRefresh={<PullToRefresh
             refreshing={this.state.refreshing}
             onRefresh={this.onRefresh}
           />}
-          onEndReached={this.onEndReached}
-          pageSize={5}
+          onEndReached={this.handleEndReached}
         />
 
       </div>

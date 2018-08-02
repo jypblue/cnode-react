@@ -1,5 +1,9 @@
 @import '../../styles/variables.scss';
-
+.cnd-topic-list {
+  .am-list {
+    width: 100%!important;
+  }
+}
 .cnd-topic-item {
   position: relative;
   width: 100%;
