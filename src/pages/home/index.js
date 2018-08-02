@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, NavBar, ActivityIndicator } from 'antd-mobile';
 import TopicList from './TopicList';
+// import TopicList from './ListView';
 import './home.scss';
 
 class TopicHome extends Component {
@@ -36,24 +37,24 @@ class TopicHome extends Component {
         },
       ],
       curTopic: null,
-      isLoading: false
+      isTabLoading: false
     };
 
     this.handleTabsChange = this.handleTabsChange.bind(this);
-    this.handleIsLoading = this.handleIsLoading.bind(this);
+    this.handleIsTabLoading = this.handleIsTabLoading.bind(this);
   }
 
   handleTabsChange(tab, index) {
     this.setState({
       curTopic: tab,
       curTabIndex: index,
-      isLoading: false
+      isTabLoading: false
     });
   }
 
-  handleIsLoading(isLoading) {
+  handleIsTabLoading(isTabLoading) {
     this.setState({
-      isLoading
+      isTabLoading
     });
   }
 
@@ -63,7 +64,7 @@ class TopicHome extends Component {
         <NavBar mode="dark"
 
           rightContent={
-            [<ActivityIndicator key={0} animating={this.state.isLoading} />]
+            [<ActivityIndicator key={0} animating={this.state.isTabLoading} />]
           }
         >主题</NavBar>
         <Tabs tabs={this.state.topicTabs}
@@ -74,7 +75,7 @@ class TopicHome extends Component {
           {
             (tab) => {
               return (
-                <TopicList data={tab} onIsLoading={this.handleIsLoading} />
+                <TopicList data={tab} onIsTabLoading={this.handleIsTabLoading} />
               );
             }
           }
