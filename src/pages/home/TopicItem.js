@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import Truncate from 'react-truncate';
 import {
-  formatDate,
   formatTopicTab
 } from '@/utils';
 
@@ -16,37 +16,38 @@ class TopicItem extends Component {
   render() {
     const item = this.props.data;
     return (
-      <div className="cnd-topic-item flex">
-        <div className="cnd-topic-item__author">
-          <img src={item.author.avatar_url} className="cnd-topic-item__avatar" alt="" />
-          <div className="cnd-topic-item__name">
-            {item.author.loginname}
+      <div className="cnd-topic-item">
+        <div className="cnd-topic-item__head flex flex-pack-justify">
+          <div className="cnd-topic-item__author">
+            <img src={item.author.avatar_url} className="cnd-topic-item__avatar" alt="" />
+            <span className="cnd-topic-item__name">
+              {item.author.loginname}
+            </span>
+          </div>
+          <div className="cnd-topic-item__tags">
+            <span className="cnd-tag ">
+              {formatTopicTab(item.tab)} {item.good ? '/ 精' : ''} {item.top ? '/ 顶' : ''}
+            </span>
           </div>
         </div>
-        <div className="cnd-topic-item__content flex-1">
+        <div className="cnd-topic-item__body">
           <div className="cnd-topic-item__title">
             {item.title}
           </div>
-          <div className="cnd-topic-item__info">
-            <ul className="flex ">
-              <li className="flex-1">
-                <span className="cnd-tag ">
-                  {formatTopicTab(item.tab)}
-                </span>
-                <span className="cnd-tag ">
-                  {item.good ? '精' : ''}
-                </span>
-                <span className="cnd-tag ">
-                  {item.top ? '顶' : ''}
-                </span>
-              </li>
-              <li className="flex-1">
-                <span>{item.reply_count}/{item.visit_count}</span>
-              </li>
-              <li className="flex-2">
-                {formatDate(item.last_reply_at)}
-              </li>
-            </ul>
+          <div className="cnd-topic-item__content">
+            <Truncate lines={3} ellipsis={'...'}>
+              {item.content}
+            </Truncate>
+          </div>
+        </div>
+        <div className="cnd-topic-item__foot">
+          <div className="cnd-topic-item__count">
+            <span className="cnd-topic-item__reply-count">
+              <i className="iconfont icon-visit cnd-topic-item__count-icon "></i> {item.visit_count}
+            </span>
+            <span className="cnd-topic-item__visit-count">
+              <i className="iconfont icon-reply cnd-topic-item__count-icon"></i> {item.reply_count}
+            </span>
           </div>
         </div>
       </div>
