@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { NavBar, Icon, ActionSheet } from 'antd-mobile';
 import request from '@/http';
-class Discover extends Component {
+import ReplyBar from './ReplyBar';
+
+class TopicDetail extends Component {
   constructor(props) {
     super(props);
     console.log(props);
     this.state = {
-
+      topic: null
     };
   }
 
@@ -21,7 +23,12 @@ class Discover extends Component {
         accesstoken: ''
       };
       const result = await request.get(`/topic/${this.props.match.params.id}`, params);
-      console.log(result.data);
+      // console.log(result.data);
+      if (result.success) {
+        this.setState({
+          topic: result.data
+        });
+      }
     } catch (error) {
       throw new Error(error);
     }
@@ -56,19 +63,44 @@ class Discover extends Component {
   };
 
   render() {
+    // const { topic } = this.state;
+
+    const BackInfo = (state) => {
+      const topic = state.topic;
+      console.log(state);
+      if (topic) {
+        console.log(topic);
+        return (
+          <div className="cnd-topic-detail__author" >
+            <img src={topic.author.avatar_url} className="cnd-topic-item__avatar" alt="" />
+            <span className="cnd-topic-item__name">
+              {topic.author.loginname}
+            </span>
+          </div>
+        );
+      } else {
+        return (<div> 返回</div>);
+      }
+    };
+
     return (
-      <div className="cnd-discover">
+      <div className="cnd-topic-detail">
         <NavBar mode="dark"
-          icon={<Icon type="left" />}
+          leftContent={[
+            <Icon key="0" type="left" size="lg" />,
+            <BackInfo key="1" {...this.state} />
+          ]}
           onLeftClick={() => { this.props.history.goBack() }}
           rightContent={[
-            <i key="0" className="iconfont icon-share-bold" onClick={this.handleShareIconClick.bind(this)} ></i>,
+            <i key="0" className="iconfont icon-share-bold cnd-icon-share" onClick={this.handleShareIconClick.bind(this)} ></i>,
           ]}
-        >主题详情</NavBar>
-        topic detail
+        ></NavBar>
+        <div>
+        </div>
+        <ReplyBar />
       </div>
     );
   }
 }
 
-export default Discover;
+export default TopicDetail;
