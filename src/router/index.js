@@ -32,13 +32,25 @@ import TopicDetail from '../pages/home/TopicDetail';
 //   loading: Loading
 // });
 
-
-const Main = () => (
+const Main = (data) => (
   <div>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/topics" component={Home} />
-      <Route exact path="/topic/:id" component={TopicDetail} />
+      <Route exact path="/" render={
+        (props) => (
+          <Home {...data} {...props} />
+        )
+      }
+      />
+      <Route exact path="/topics" render={
+        (props) => (
+          <Home {...data} {...props} />
+        )
+      }
+      />
+      <Route exact path="/topic/:id" render={(props) => (
+        <TopicDetail {...data} {...props} />
+      )}
+      />
       <Route path="/discover" component={Discover} />
       <Route path="/publish" component={Publish} />
       <Route path="/notice" component={Notice} />

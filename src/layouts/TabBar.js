@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { TabBar } from 'antd-mobile';
 import TouchBar from './TouchBar';
-import '../assets/fonts/iconfont.css';
 import './TabBar.scss';
 
 const barArr = [{
@@ -44,9 +43,10 @@ const barArr = [{
 class App extends Component {
   constructor(props) {
     super(props);
+    console.log('tabbarProps', props);
     this.state = {
       selectedTab: 'Home',
-      hidden: false,
+      hidden: props.hidden,
     };
   }
 

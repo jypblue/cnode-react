@@ -48,7 +48,7 @@ class TopicList extends Component {
         mdrender: false,
       };
       const result = await request.get('/topics', params);
-      console.log('topics:', result.data);
+      // console.log('topics:', result.data);
       if (result.success) {
         const data = result.data;
         topicArr = [].concat(topicArr, data);
@@ -96,7 +96,7 @@ class TopicList extends Component {
         mdrender: false,
       };
       const result = await request.get('/topics', params);
-      console.log('topics:', result.data);
+      // console.log('topics:', result.data);
       this.handleIsTabLoading(false);
       if (result.success) {
         const data = result.data;
