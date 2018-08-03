@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { NavBar, Icon, ActionSheet } from 'antd-mobile';
 import request from '@/http';
 import ReplyBar from './ReplyBar';
+import { formatDateCount } from '@/utils';
 
 class TopicDetail extends Component {
   constructor(props) {
     super(props);
     console.log(props);
     this.state = {
-      topic: null
+      topic: null,
     };
   }
 
@@ -16,6 +17,13 @@ class TopicDetail extends Component {
     this.fnGetTopicDetail();
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.useBodyScroll) {
+      document.body.style.overflow = 'auto';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+  }
 
   async fnGetTopicDetail() {
     try {
@@ -26,7 +34,7 @@ class TopicDetail extends Component {
       // console.log(result.data);
       if (result.success) {
         this.setState({
-          topic: result.data
+          topic: result.data,
         });
       }
     } catch (error) {
@@ -63,13 +71,9 @@ class TopicDetail extends Component {
   };
 
   render() {
-    // const { topic } = this.state;
-
     const BackInfo = (state) => {
       const topic = state.topic;
-      console.log(state);
       if (topic) {
-        console.log(topic);
         return (
           <div className="cnd-topic-detail__author" >
             <img src={topic.author.avatar_url} className="cnd-topic-item__avatar" alt="" />
@@ -83,9 +87,37 @@ class TopicDetail extends Component {
       }
     };
 
+    const DetailMain = (state) => {
+      const topic = state.topic;
+      console.log(topic);
+      if (topic) {
+        const detailContent = () => {
+          return { __html: topic.content };
+        };
+
+        return (
+          <div className="cnd-topic-detail__main borderBottom1px">
+            <div className="cnd-topic-detail__title">
+              {topic.title}
+            </div>
+            <div className="cnd-topic-detail__create">
+              创建时间：<span className="create-time">{formatDateCount(topic.create_at)}</span>
+            </div>
+            <div className="cnd-topic-detail__content break" dangerouslySetInnerHTML={detailContent()}>
+
+            </div>
+          </div>
+        );
+      } else {
+        return null;
+      }
+    };
+
     return (
       <div className="cnd-topic-detail">
-        <NavBar mode="dark"
+        <NavBar
+          className="cnd-topic-detail__navbar"
+          mode="dark"
           leftContent={[
             <Icon key="0" type="left" size="lg" />,
             <BackInfo key="1" {...this.state} />
@@ -94,13 +126,12 @@ class TopicDetail extends Component {
           rightContent={[
             <i key="0" className="iconfont icon-share-bold cnd-icon-share" onClick={this.handleShareIconClick.bind(this)} ></i>,
           ]}
-        ></NavBar>
-        <div>
-        </div>
+        />
+        <DetailMain {...this.state} />
         <ReplyBar />
       </div>
     );
   }
 }
-
+// <DetailMain {...this.state} />
 export default TopicDetail;
