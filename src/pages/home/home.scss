@@ -155,5 +155,62 @@
 }
 .cnd-topic-reply__avatar {
   display: block;
-  border: 1px solid $item-border;
+  width: 22px;
+  height: 22px;
+  background-color: $gray-bg;
+}
+
+
+
+.cnd-reply-list {
+  background-color: $white;
+
+}
+.cnd-reply-list__title {
+  position: relative;
+  padding: 10px 15px;
+  color: $gray;
+}
+.cnd-reply-box {
+  padding-left: 15px;
+}
+
+.cnd-reply-item {
+  position: relative;
+  padding:15px 0;
+  &:nth-last-child(1):after{
+    height: 0;
+  }
+}
+.cnd-reply-item__avatar {
+  position: absolute;
+  left: 0px;
+  top: 15px;
+}
+.cnd-reply-item__main {
+  margin-left: 32px;
+  p,
+  img {
+    width: 100%;
+  }
+}
+.cnd-reply-item__name {
+  color: $reply-name;
+  display: block;
+  height: 24px;
+  line-height: 1;
+}
+.cnd-reply-item__content {
+  padding-right: 40px;
+  font-size: 13px;
+  padding-bottom: 5px;
+  .markdown-text {
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow: hidden;
+  }
+}
+.cnd-reply-item__mark {
+  color: $gray-3;
+  font-size: 13px;
 }

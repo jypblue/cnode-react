@@ -14,6 +14,7 @@ class App extends Component {
       hidden: false,
     };
     this.handleTabBarHidden = this.handleTabBarHidden.bind(this);
+
   }
 
   handleTabBarHidden(hidden) {
@@ -23,6 +24,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('app', this.props);
     return (
       <div className="cnd-app">
         <StatusBar />

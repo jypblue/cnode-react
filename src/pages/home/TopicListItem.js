@@ -35,7 +35,7 @@ class TopicItem extends Component {
           </div>
           <div className="cnd-topic-item__tags">
             <span className="cnd-tag ">
-              {formatTopicTab(item.tab)} {item.good ? '/ 精' : ''} {item.top ? '/ 顶' : ''}
+              {formatTopicTab(item.tab)} {item.good ? '/ 精' : ''} {item.top ? '/ 热' : ''}
             </span>
           </div>
         </div>

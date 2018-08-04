@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 
-class Publish extends Component {
+class Login extends Component {
   render() {
     return (
-      <div className="cnd-publish">
+      <div className="cnd-login">
         publish
       </div>
     );
   }
 }
 
-export default Publish;
+export default Login;

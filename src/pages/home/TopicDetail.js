@@ -111,7 +111,7 @@ class TopicDetail extends Component {
             <div className="cnd-topic-detail__main-tags">
               <span className="cnd-topic-detail__tag"> {formatTopicTab(topic.tab)}</span>
               {topic.good ? <span className="cnd-topic-detail__tag">精</span> : ''}
-              {topic.top ? <span className="cnd-topic-detail__tag">顶</span> : ''}
+              {topic.top ? <span className="cnd-topic-detail__tag">热</span> : ''}
             </div>
             <div className="cnd-topic-detail__main-reply">
               <span>阅读：{topic.visit_count}</span>&nbsp;·&nbsp;
@@ -142,15 +142,16 @@ class TopicDetail extends Component {
 
         {/* 回复输入框 */}
         <InputItem
+          style={{ 'display': this.state.visible ? 'block' : 'none' }}
           className="cnd-topic-reply__input-item"
           placeholder="说说你的想法..."
         >
           <img src="" className="cnd-topic-reply__avatar" alt="" />
         </InputItem>
         {/* 评论列表 */}
-        <ReplyList {...this.state} />
+        <ReplyList {...this.state.topic} />
         {/* 评论bar */}
-        <ReplyBar {...this.state} />
+        <ReplyBar {...this.state.topic} />
         {/* 实际评论输入框 */}
         <SearchBar
           style={{ 'display': this.state.visible ? 'block' : 'none' }}

@@ -9,10 +9,11 @@ import {
 
 
 import Home from '../pages/home';
-import Discover from '../pages/discover';
 import Publish from '../pages/publish';
 import Notice from '../pages/notice';
 import Me from '../pages/me';
+import User from '../pages/user';
+import Login from '../pages/login';
 
 import TopicDetail from '../pages/home/TopicDetail';
 
@@ -33,7 +34,7 @@ import TopicDetail from '../pages/home/TopicDetail';
 // });
 
 const Main = (data) => (
-  <div>
+  <div className="cnd-routes-main">
     <Switch>
       <Route exact path="/" render={
         (props) => (
@@ -51,10 +52,11 @@ const Main = (data) => (
         <TopicDetail {...data} {...props} />
       )}
       />
-      <Route path="/discover" component={Discover} />
       <Route path="/publish" component={Publish} />
       <Route path="/notice" component={Notice} />
       <Route path="/me" component={Me} />
+      <Route path="/user/:name" component={User} />
+      <Route path="/login" component={Login} />
     </Switch>
   </div>
 );

@@ -10,13 +10,14 @@ const barArr = [{
   title: '阅读',
   name: 'Home',
   url: '/',
-}, {
-  icon: 'iconfont icon-search',
-  selectedIcon: '',
-  title: '发现',
-  name: 'Discover',
-  url: '/discover',
 },
+// {
+//   icon: 'iconfont icon-search',
+//   selectedIcon: '',
+//   title: '发现',
+//   name: 'Discover',
+//   url: '/discover',
+// },
 {
   icon: 'iconfont icon-publish',
   selectedIcon: '',
@@ -40,7 +41,7 @@ const barArr = [{
 
 
 
-class App extends Component {
+class TabBarApp extends Component {
   constructor(props) {
     super(props);
     console.log('tabbarProps', props);
@@ -86,5 +87,5 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+export default withRouter(TabBarApp);
 
