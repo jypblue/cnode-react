@@ -15,7 +15,7 @@ import Me from '../pages/me';
 import User from '../pages/user';
 import Login from '../pages/login';
 
-import TopicDetail from '../pages/home/TopicDetail';
+import TopicDetail from '../pages/home/detail';
 
 // function Loading() {
 //   return <ActivityIndicator
@@ -36,22 +36,9 @@ import TopicDetail from '../pages/home/TopicDetail';
 const Main = (data) => (
   <div className="cnd-routes-main">
     <Switch>
-      <Route exact path="/" render={
-        (props) => (
-          <Home {...data} {...props} />
-        )
-      }
-      />
-      <Route exact path="/topics" render={
-        (props) => (
-          <Home {...data} {...props} />
-        )
-      }
-      />
-      <Route exact path="/topic/:id" render={(props) => (
-        <TopicDetail {...data} {...props} />
-      )}
-      />
+      <Route exact path="/" component={Home} />
+      <Route exact path="/topics" component={Home} />
+      <Route exact path="/topic/:id" component={TopicDetail} />
       <Route path="/publish" component={Publish} />
       <Route path="/notice" component={Notice} />
       <Route path="/me" component={Me} />

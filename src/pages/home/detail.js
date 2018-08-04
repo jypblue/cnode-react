@@ -4,8 +4,9 @@ import request from '@/http';
 import ReplyBar from './ReplyBar';
 import ReplyList from './ReplyList';
 import { formatDateCount,  formatTopicTab } from '@/utils';
+import './home-detail.scss';
 
-class TopicDetail extends Component {
+class DetailPage extends Component {
   constructor(props) {
     super(props);
     console.log(props);
@@ -171,4 +172,4 @@ class TopicDetail extends Component {
   }
 }
 // <DetailMain {...this.state} />
-export default TopicDetail;
+export default DetailPage;
