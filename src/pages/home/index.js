@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, NavBar, ActivityIndicator } from 'antd-mobile';
+import TabBar from '@/layouts/TabBar';
 import TopicList from './TopicList';
-// import TopicList from './ListView';
 import './home.scss';
 
 class TopicHome extends Component {
@@ -80,6 +80,7 @@ class TopicHome extends Component {
             }
           }
         </Tabs>
+        <TabBar selected="Home" />
       </div>
     );
   }

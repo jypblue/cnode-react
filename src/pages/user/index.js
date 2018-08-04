@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class User extends Component {
+class UserPage extends Component {
   render() {
     return (
       <div className="cnd-user">
@@ -11,4 +11,4 @@ class User extends Component {
   }
 }
 
-export default User;
+export default UserPage;

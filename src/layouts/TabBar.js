@@ -46,8 +46,8 @@ class TabBarApp extends Component {
     super(props);
     console.log('tabbarProps', props);
     this.state = {
-      selectedTab: 'Home',
-      hidden: props.hidden,
+      selectedTab: props.selected,
+      hidden: false,
     };
   }
 
