@@ -7,15 +7,15 @@
 @import './variables.scss';
 
 /*- Html Tags Reset -*/
-html { overflow-y:scroll; background-color:#f0f2f5; }
+html { overflow-y:scroll;}
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, figure { padding:0; margin:0; }
-body { font:14px/1.5 "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif; color:#303133;}
+body { font:14px/1.5 "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif; color:#333;}
 abbr,article,aside,bb,datagrid,datalist,details,dialog,event-source,figure,figcaption,footer,header,mark,menu,meter,nav,output,progress,section,time { display:block; height:auto; }
 table { border-collapse:collapse; border-spacing:0; }
 ol, ul { list-style:none outside; }
 h1, h2, h3, h4, h5, h6 { font-size:100%; }
 fieldset, img { border:0 none; vertical-align:middle; }
-a { color:#303133; text-decoration:none; }
+a { color:#333; text-decoration:none; }
 a:hover{text-decoration: none;};
 em { font-style:normal; }
 textarea { overflow-y:auto; }
@@ -40,6 +40,8 @@ input[type="number"]{-moz-appearance:textfield;}
 .float-right { float: right;}
 .text-right {text-align: right;}
 .text-center {text-align: center;}
+.is-show{display: block;}
+.is-hide{display: none;}
 
 .ellipsis { white-space:nowrap; text-overflow:ellipsis; overflow:hidden;}
 .break { word-break:break-all; word-wrap:break-word;overflow: hidden;}

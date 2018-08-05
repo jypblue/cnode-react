@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavBar, Icon, ActionSheet, InputItem, SearchBar } from 'antd-mobile';
+import { NavBar, Icon, ActionSheet, InputItem, SearchBar, Toast } from 'antd-mobile';
 import request from '@/http';
 import ReplyBar from './ReplyBar';
 import ReplyList from './ReplyList';
@@ -10,10 +10,13 @@ class DetailPage extends Component {
   constructor(props) {
     super(props);
     console.log(props);
+    const accesstoken = window.localStorage.getItem('cnode_accesstoken') || '';
+    console.log('accesstoken', accesstoken);
     this.state = {
       topic: null,
       replyValue: '',
       visible: false,
+      accesstoken
     };
   }
 
@@ -31,8 +34,9 @@ class DetailPage extends Component {
 
   async fnGetTopicDetail() {
     try {
+      Toast.loading('Loading...', 0);
       const params = {
-        accesstoken: ''
+        accesstoken: this.state.accesstoken
       };
       const result = await request.get(`/topic/${this.props.match.params.id}`, params);
       // console.log(result.data);
@@ -41,11 +45,12 @@ class DetailPage extends Component {
           topic: result.data,
         });
       }
+      Toast.hide();
     } catch (error) {
+      Toast.hide();
       throw new Error(error);
     }
   }
-
 
   // 点击弹出分享选项
   handleShareIconClick() {
@@ -79,7 +84,7 @@ class DetailPage extends Component {
       const topic = state.topic;
       if (topic) {
         return (
-          <div className="cnd-topic-detail__author" >
+          <div className="cnd-topic-detail__author ellipsis" >
             <img src={topic.author.avatar_url} className="cnd-topic-item__avatar" alt="" />
             <span className="cnd-topic-item__name">
               {topic.author.loginname}
@@ -143,14 +148,13 @@ class DetailPage extends Component {
 
         {/* 回复输入框 */}
         <InputItem
-          style={{ 'display': this.state.visible ? 'block' : 'none' }}
           className="cnd-topic-reply__input-item"
           placeholder="说说你的想法..."
         >
           <img src="" className="cnd-topic-reply__avatar" alt="" />
         </InputItem>
         {/* 评论列表 */}
-        <ReplyList {...this.state.topic} />
+        <ReplyList {...this.state} />
         {/* 评论bar */}
         <ReplyBar {...this.state.topic} />
         {/* 实际评论输入框 */}

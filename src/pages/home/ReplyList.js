@@ -1,24 +1,47 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { formatDateCount } from '@/utils';
+import request from '@/http';
 
 class ReplyList extends Component {
-  constructor(props) {
-    super(props);
-    this.handleUpsClick = this.handleUpsClick.bind(this);
-    this.handleReplyClick = this.handleReplyClick.bind(this);
-  }
 
-  handleUpsClick() {
-    console.log(111111);
+
+  handleUpsClick(reply_id) {
+    console.log('点赞');
+
+    if (this.props.accesstoken) {
+      this.fnGiveThumbsUps(reply_id);
+    } else {
+      // 跳转登录
+      this.props.history.push('/login');
+    }
+
   }
 
   handleReplyClick() {
     console.log(22222);
   }
+
+  async fnGiveThumbsUps(reply_id) {
+    try {
+      const accesstoken = this.props.accesstoken;
+      const params = {
+        accesstoken
+      };
+
+      const result = await request.post(`/reply/${reply_id}/ups`, params);
+      if (result.success) {
+        console.log(result.data);
+      }
+
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   render() {
-    const replyList = this.props.replies || [];
-    const count = this.props.reply_count || 0;
+    const replyList = this.props.topic ? this.props.topic.replies : [];
+    const count = this.props.topic ? this.props.topic.reply_count : 0;
     console.log(this.props);
     console.log(replyList);
     const ListItem = (reply) => {
@@ -35,10 +58,10 @@ class ReplyList extends Component {
             <div className="cnd-reply-item__content break" dangerouslySetInnerHTML={replyContent()}>
             </div>
             <div className="cnd-reply-item__mark">
-              <span onClick={this.handleUpsClick}><i className="iconfont icon-zan-up"></i>
+              <span onClick={this.handleUpsClick.bind(this, reply.reply_id)}><i className="iconfont icon-zan-up"></i>
                 {reply.ups.length ? <em className="color-green">{reply.ups.length}</em> : '赞'}
               </span>&nbsp;·&nbsp;
-              <span onClick={this.handleReplyClick}>回复</span>&nbsp;·&nbsp;
+              <span onClick={this.handleReplyClick.bind(this)}>回复</span>&nbsp;·&nbsp;
               <span>{formatDateCount(reply.create_at)}</span>
             </div>
           </div>

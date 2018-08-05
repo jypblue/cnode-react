@@ -1,0 +1,28 @@
+@import '../../styles/variables.scss';
+
+.cnd-login {
+  background-color: $white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.cnd-logo {
+  width: 50%;
+  height: 20%;
+}
+
+.cnd-login-accessToken {
+  position: relative;
+  margin: 20px 0 30px;
+}
+.cnd-login-input {
+  width: 100%;
+  font-size: 14px;
+  color: $gray;
+  padding: 20px 30px;
+  border: none;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { TabBar } from 'antd-mobile';
+import { isShowTouchBar } from '@/utils';
 import TouchBar from './TouchBar';
 import './TabBar.scss';
 
@@ -81,7 +82,7 @@ class TabBarApp extends Component {
             </TabBar.Item>
           )}
         </TabBar>
-        <TouchBar />
+        <TouchBar touchBarShow={isShowTouchBar()} />
       </div>
     );
   }

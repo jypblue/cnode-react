@@ -8,10 +8,6 @@ import {
 class TopicItem extends Component {
   constructor(props) {
     super(props);
-    // console.log(props.data.tab);
-    this.state = {
-    };
-    console.log(props.data);
     this.handleTopicItemClick = this.handleTopicItemClick.bind(this);
   }
 
