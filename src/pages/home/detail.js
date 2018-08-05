@@ -31,12 +31,6 @@ class DetailPage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.useBodyScroll) {
-      document.body.style.overflow = 'auto';
-    } else {
-      document.body.style.overflow = 'hidden';
-    }
-
     if (this.state.visible) {
       this.autoFocusInst.focus();
     }
@@ -97,6 +91,16 @@ class DetailPage extends Component {
       loginname: loginname,
       reply_id: reply_id
     });
+  }
+
+  // 滚动到评论区
+  handleScrollToReply() {
+    // console.log(this.InputItemEl);
+    // const top = this.inputItem.scrollHeight;
+    // window.setTimeout(() => {
+    //   document.body.scrollTop = top;
+    // }, 0);
+
   }
 
   // 取消评论
@@ -241,6 +245,7 @@ class DetailPage extends Component {
           placeholder="说说你的想法..."
           editable={false}
           onClick={this.handleInputItemClick}
+          ref={el => { this.InputItemEl = el }}
         >
           <img src={this.state.user && this.state.user.avatar_url} className="cnd-topic-reply__avatar" alt="" />
         </InputItem>
@@ -249,7 +254,10 @@ class DetailPage extends Component {
           onRefreshTopicDetail={this.handleRefreshTopicDetail}
         />
         {/* 评论bar */}
-        <ReplyBar {...this.state.topic} visible={!this.state.visible} onReplyInputVisible={this.handleReplyInputClick} />
+        <ReplyBar {...this.state.topic} visible={!this.state.visible}
+          onReplyInputVisible={this.handleReplyInputClick}
+          onScrollToReplyList={this.handleScrollToReply}
+        />
         {/* 实际评论输入框 */}
         <div
           style={{ 'visibility': this.state.visible ? 'visible' : 'hidden' }}

@@ -15,6 +15,10 @@ class ReplyBar extends Component {
     this.props.onReplyInputVisible();
   }
 
+  handleScrollToReply = () => {
+    this.props.onScrollToReplyList();
+  }
+
   // 是否收藏
   handleTopicCollect = () => {
     this.setState({
@@ -37,7 +41,7 @@ class ReplyBar extends Component {
           </div>
           <div className="flex-1 cnd-reply-bar__count">
             {topic.visit_count ? <span>查看&nbsp;<em>{topic.visit_count}</em>&nbsp;&nbsp;·&nbsp;&nbsp;</span> : ''}
-            {topic.reply_count ? <span>评论&nbsp;<em>{topic.reply_count}</em></span> : ''}
+            {topic.reply_count ? <span onClick={this.handleScrollToReply}>评论&nbsp;<em>{topic.reply_count}</em></span> : ''}
           </div>
         </div>
         <TouchBar touchBarShow={isShowTouchBar()} />
