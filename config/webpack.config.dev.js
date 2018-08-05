@@ -154,6 +154,7 @@ module.exports = {
               cacheDirectory: true,
               "presets": [
                 "react",
+                "stage-0"
               ],
               "plugins": [
                 "syntax-dynamic-import",

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { NavBar, Icon, WingBlank, Button, Toast } from 'antd-mobile';
-// import cnodeIcon from '@/assets/svg/cnodejs.svg';
 
 const requireAll = requireContext => requireContext.keys().map(requireContext);
 const req = require.context('@/assets/svg', false, /\.svg$/);
@@ -34,10 +33,12 @@ class LoginPage extends Component {
       const result = await request.post('/accesstoken', params);
       console.log(result);
       if (result.success) {
-        window.localStorage.setItem('cnode_user', JSON.stringify(result.data));
+        window.localStorage.setItem('cnode_user', JSON.stringify(result));
         window.localStorage.setItem('cnode_accesstoken', this.loginInput.value);
+        Toast.info('登录成功', 2);
+        this.props.history.goBack();
       } else {
-        Toast.info('登录失败', 1);
+        Toast.info('登录失败', 2);
       }
       this.setState({
         loading: false

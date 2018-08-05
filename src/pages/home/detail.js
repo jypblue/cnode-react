@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavBar, Icon, ActionSheet, InputItem, SearchBar, Toast } from 'antd-mobile';
+import { NavBar, Icon, ActionSheet, SearchBar, InputItem, Toast } from 'antd-mobile';
 import request from '@/http';
 import ReplyBar from './ReplyBar';
 import ReplyList from './ReplyList';
@@ -11,12 +11,16 @@ class DetailPage extends Component {
     super(props);
     console.log(props);
     const accesstoken = window.localStorage.getItem('cnode_accesstoken') || '';
+    const cnodeUser = window.localStorage.getItem('cnode_user');
+    const user = JSON.parse(cnodeUser) || {};
     console.log('accesstoken', accesstoken);
     this.state = {
       topic: null,
       replyValue: '',
       visible: false,
-      accesstoken
+      accesstoken,
+      user,
+      loginname: ''
     };
   }
 
@@ -30,6 +34,14 @@ class DetailPage extends Component {
     } else {
       document.body.style.overflow = 'hidden';
     }
+
+    if (this.state.visible) {
+      this.autoFocusInst.focus();
+    }
+  }
+
+  handleRefreshTopicDetail = () => {
+    this.fnGetTopicDetail();
   }
 
   async fnGetTopicDetail() {
@@ -51,6 +63,30 @@ class DetailPage extends Component {
       throw new Error(error);
     }
   }
+  handleInputItemClick = (loginname = '') => {
+    this.handleReplyInputVisible(true, loginname);
+  }
+
+  handleReplyInputVisible = (visible, loginname) => {
+    this.setState({
+      visible: visible,
+      loginname: loginname
+    });
+  }
+
+  // 取消评论
+  handleSearchBarCancel = () => {
+    this.handleReplyInputVisible(false);
+  }
+
+  // 提交评论
+  handleSearchBarSubmit = () => {
+
+  }
+
+  handleSearchBarChange = (value) => {
+    this.setState({ replyValue: value });
+  };
 
   // 点击弹出分享选项
   handleShareIconClick() {
@@ -150,30 +186,47 @@ class DetailPage extends Component {
         <InputItem
           className="cnd-topic-reply__input-item"
           placeholder="说说你的想法..."
+          onFocus={this.handleInputItemClick}
         >
-          <img src="" className="cnd-topic-reply__avatar" alt="" />
+          <img src={this.state.user && this.state.user.avatar_url} className="cnd-topic-reply__avatar" alt="" />
         </InputItem>
         {/* 评论列表 */}
-        <ReplyList {...this.state} />
-        {/* 评论bar */}
-        <ReplyBar {...this.state.topic} />
-        {/* 实际评论输入框 */}
-        <SearchBar
-          style={{ 'display': this.state.visible ? 'block' : 'none' }}
-          className=""
-          value={this.state.replyValue}
-          placeholder="Search"
-          onSubmit={value => console.log(value, 'onSubmit')}
-          onClear={value => console.log(value, 'onClear')}
-          onFocus={() => console.log('onFocus')}
-          onBlur={() => console.log('onBlur')}
-          onCancel={() => console.log('onCancel')}
-          showCancelButton
-          onChange={this.onChange}
+        <ReplyList {...this.state} onReplyInputVisible={this.handleInputItemClick}
+          onRefreshTopicDetail={this.handleRefreshTopicDetail}
         />
+        {/* 评论bar */}
+        <ReplyBar {...this.state.topic} visible={!this.state.visible} onReplyInputVisible={this.handleInputItemClick} />
+        {/* 实际评论输入框 */}
+        <div
+          style={{ 'visibility': this.state.visible ? 'visible' : 'hidden' }}
+          className="cnd-topic-reply__box-input"
+        >
+          <SearchBar
+            value={this.state.replyValue}
+            ref={el => { this.autoFocusInst = el }}
+            placeholder={this.state.loginname ? `@${this.state.loginname}` : '说说你的想法...'}
+            onSubmit={this.handleSearchBarSubmit}
+            onClear={value => console.log(value, 'onClear')}
+            onFocus={() => console.log('onFocus')}
+            onBlur={() => console.log('onBlur')}
+            onCancel={this.handleSearchBarCancel}
+            showCancelButton
+            onChange={this.handleSearchBarChange}
+          />
+        </div>
+
       </div>
     );
   }
 }
 // <DetailMain {...this.state} />
+/*
+ <InputItem
+          className="cnd-topic-reply__input-item"
+          placeholder="说说你的想法..."
+          onFocus={this.handleInputItemClick}
+        >
+          <img src="" className="cnd-topic-reply__avatar" alt="" />
+        </InputItem>
+*/
 export default DetailPage;

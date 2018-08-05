@@ -5,18 +5,31 @@ class ReplyBar extends Component {
   constructor(props) {
     super(props);
     console.log(props);
+    this.state = {
+      is_collect: props.is_collect
+    };
+  }
+
+  handleReplyClick = () => {
+    this.props.onReplyInputVisible();
+  }
+
+  handleTopicCollect = () => {
+    this.setState({
+      is_collect: !this.state.is_collect
+    });
   }
 
   render() {
     const topic = this.props;
     return (
-      <div className="cnd-reply-bar">
+      <div className="cnd-reply-bar" style={{ 'visibility': this.props.visible ? 'visible' : 'hidden' }}>
         <div className="cnd-reply-bar__inner borderTop1px flex flex-pack-justify">
           <div className="flex-1 cnd-reply-bar__tags">
-            <span className="cnd-reply-bar__tag">
-              <i className="iconfont icon-zan cnd-reply__tag-collect"></i>
+            <span className="cnd-reply-bar__tag" onClick={this.handleTopicCollect}>
+              <i className={this.state.is_collect ? 'iconfont cnd-reply__tag-collect icon-collected' : 'iconfont cnd-reply__tag-collect icon-zan'}></i>
             </span>
-            <span className="cnd-reply-bar__tag">
+            <span className="cnd-reply-bar__tag" onClick={this.handleReplyClick}>
               <i className="iconfont icon-comment"></i>
             </span>
           </div>

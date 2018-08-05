@@ -26,6 +26,9 @@ module.exports = {
         'error',
         2
     ],
+    'no-param-reassign': 0,
+    'no-undefined': 0,
+    'no-debugger': 0,
     // @fixable jsx 的 props 缩进必须为两个空格
     'react/jsx-indent-props': [
         'error',

@@ -5,10 +5,21 @@ import request from '@/http';
 
 class ReplyList extends Component {
 
+  constructor(props) {
+    super(props);
+    // const replyList = this.props.topic ? this.props.topic.replies : [];
+    this.state = {
+      id: props.user.id,
+    };
+  }
+
+  componentDidMount = () => {
+
+  }
+
 
   handleUpsClick(reply_id) {
     console.log('点赞');
-
     if (this.props.accesstoken) {
       this.fnGiveThumbsUps(reply_id);
     } else {
@@ -18,20 +29,35 @@ class ReplyList extends Component {
 
   }
 
-  handleReplyClick() {
-    console.log(22222);
+  fnIncludeSelfId({ ups }) {
+    const id = this.props.user.id;
+    const index = ups.indexOf(id);
+    if (index > -1) {
+      return 'color-green';
+    }
+    return '';
   }
 
-  async fnGiveThumbsUps(reply_id) {
+  handleReplyClick(loginname) {
+    console.log('回复');
+    if (this.props.accesstoken) {
+      this.props.onReplyInputVisible(loginname);
+    } else {
+      // 跳转登录
+      this.props.history.push('/login');
+    }
+  }
+
+  async fnGiveThumbsUps(id) {
     try {
       const accesstoken = this.props.accesstoken;
       const params = {
         accesstoken
       };
 
-      const result = await request.post(`/reply/${reply_id}/ups`, params);
+      const result = await request.post(`/reply/${id}/ups`, params);
       if (result.success) {
-        console.log(result.data);
+        this.props.onRefreshTopicDetail();
       }
 
     } catch (error) {
@@ -42,27 +68,29 @@ class ReplyList extends Component {
   render() {
     const replyList = this.props.topic ? this.props.topic.replies : [];
     const count = this.props.topic ? this.props.topic.reply_count : 0;
-    console.log(this.props);
-    console.log(replyList);
-    const ListItem = (reply) => {
+
+    const ListItem = ({ i = 0, item }) => {
+      console.log(this.props.user.id || '');
       const replyContent = () => {
-        return { __html: reply.content };
+        return { __html: item.content };
       };
       return (
         <div className="cnd-reply-item borderBottom1px">
-          <img src={reply.author.avatar_url} className="cnd-reply-item__avatar cnd-topic-reply__avatar" alt="" />
+          <img src={item.author.avatar_url} className="cnd-reply-item__avatar cnd-topic-reply__avatar" alt="" />
           <div className="cnd-reply-item__main">
-            <Link to={`/user/${reply.author.loginname}`} className="cnd-reply-item__name">
-              {reply.author.loginname}
+            <Link to={`/user/${item.author.loginname}`} className="cnd-reply-item__name">
+              {item.author.loginname}
             </Link>
             <div className="cnd-reply-item__content break" dangerouslySetInnerHTML={replyContent()}>
             </div>
             <div className="cnd-reply-item__mark">
-              <span onClick={this.handleUpsClick.bind(this, reply.reply_id)}><i className="iconfont icon-zan-up"></i>
-                {reply.ups.length ? <em className="color-green">{reply.ups.length}</em> : '赞'}
+              <span
+                className={item.ups.indexOf(this.props.user.id || '') > -1 ? 'color-green' : ''}
+                onClick={this.handleUpsClick.bind(this, item.id)}><i className="iconfont icon-zan-up"></i>
+                {item.ups.length ? <em>{item.ups.length}</em> : '赞'}
               </span>&nbsp;·&nbsp;
-              <span onClick={this.handleReplyClick.bind(this)}>回复</span>&nbsp;·&nbsp;
-              <span>{formatDateCount(reply.create_at)}</span>
+              <span onClick={this.handleReplyClick.bind(this, item.author.loginname)}>回复</span>&nbsp;·&nbsp;
+              <span>{formatDateCount(item.create_at)}</span>
             </div>
           </div>
         </div>
@@ -80,7 +108,7 @@ class ReplyList extends Component {
         <div className="cnd-reply-box">
           {
             replyList.map((item, i) => {
-              return <ListItem key={i} {...item} />;
+              return <ListItem key={i} {...{ i, item }} />;
             })
           }
         </div>

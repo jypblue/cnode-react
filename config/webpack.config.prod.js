@@ -155,7 +155,8 @@ module.exports = {
 
               compact: true,
               "presets": [
-                "react"
+                "react",
+                "stage-0"
               ],
               "plugins": [
                 "syntax-dynamic-import",
