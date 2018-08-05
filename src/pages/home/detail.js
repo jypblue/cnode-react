@@ -20,7 +20,9 @@ class DetailPage extends Component {
       visible: false,
       accesstoken,
       user,
-      loginname: ''
+      loginname: '',
+      reply_id: '',
+      clicked: 'cancel',
     };
   }
 
@@ -44,6 +46,7 @@ class DetailPage extends Component {
     this.fnGetTopicDetail();
   }
 
+  // 获取主题详情
   async fnGetTopicDetail() {
     try {
       Toast.loading('Loading...', 0);
@@ -55,6 +58,10 @@ class DetailPage extends Component {
       if (result.success) {
         this.setState({
           topic: result.data,
+          replyValue: '',
+          visible: false,
+          loginname: '',
+          reply_id: '',
         });
       }
       Toast.hide();
@@ -63,14 +70,32 @@ class DetailPage extends Component {
       throw new Error(error);
     }
   }
-  handleInputItemClick = (loginname = '') => {
-    this.handleReplyInputVisible(true, loginname);
+
+  // 评论
+  handleInputItemClick = () => {
+    if (this.state.accesstoken) {
+      this.handleReplyInputVisible(true);
+    } else {
+      this.props.history.push('/login');
+    }
+
   }
 
-  handleReplyInputVisible = (visible, loginname) => {
+  // 评论或者回复
+  handleReplyInputClick = (item) => {
+    if (this.state.accesstoken) {
+      this.handleReplyInputVisible(true, item && item.author.loginname, item && item.id);
+    } else {
+      this.props.history.push('/login');
+    }
+
+  }
+
+  handleReplyInputVisible = (visible, loginname = '', reply_id = '') => {
     this.setState({
       visible: visible,
-      loginname: loginname
+      loginname: loginname,
+      reply_id: reply_id
     });
   }
 
@@ -81,22 +106,50 @@ class DetailPage extends Component {
 
   // 提交评论
   handleSearchBarSubmit = () => {
-
+    this.fnReplyTopic();
   }
 
+  // 评论语变化
   handleSearchBarChange = (value) => {
     this.setState({ replyValue: value });
   };
+
+  async fnReplyTopic() {
+    try {
+      const topic_id = this.state.topic.id;
+      Toast.loading('Loa ding...', 0);
+      let params = {
+        accesstoken: this.state.accesstoken,
+        content: this.state.replyValue,
+        reply_id: this.state.reply_id,
+      };
+      if (this.state.reply_id) {
+        params.content = `[@${this.state.loginname}](/user/${this.state.loginname}) ${this.state.replyValue}`;
+      }
+      const result = await request.post(`/topic/${topic_id}/replies`, params);
+      Toast.hide();
+      if (result.success) {
+        console.log(result);
+        Toast.info('发表评论成功', 2);
+        this.fnGetTopicDetail();
+      } else {
+        Toast.info('发表评论失败', 2);
+      }
+
+    } catch (error) {
+      Toast.hide();
+      throw new Error(error);
+    }
+  }
 
   // 点击弹出分享选项
   handleShareIconClick() {
     this.showShareActionSheetMulpitleLine();
   }
   dataList = [
-    { url: 'cTTayShKtEIdQVEMuiWt', title: '生活圈' },
     { url: 'umnHwvEgSyQtXlZjNJTt', title: '微信好友' },
+    { url: 'cTTayShKtEIdQVEMuiWt', title: '朋友圈' },
     { url: 'SxpunpETIwdxNjcJamwB', title: 'QQ' },
-    { url: 'wvEzCMiDZjthhAOcwTOu', title: '新浪微博' },
   ].map(obj => ({
     icon: <img src={`https://gw.alipayobjects.com/zos/rmsportal/${obj.url}.png`} alt={obj.title} style={{ width: 36 }} />,
     title: obj.title,
@@ -109,7 +162,7 @@ class DetailPage extends Component {
       message: '分享',
     },
     (buttonIndex, rowIndex) => {
-      this.setState({ clicked2: buttonIndex > -1 ? data[rowIndex][buttonIndex].title : 'cancel' });
+      this.setState({ clicked: buttonIndex > -1 ? data[rowIndex][buttonIndex].title : 'cancel' });
       // 点击分享回调
 
     });
@@ -186,16 +239,17 @@ class DetailPage extends Component {
         <InputItem
           className="cnd-topic-reply__input-item"
           placeholder="说说你的想法..."
-          onFocus={this.handleInputItemClick}
+          editable={false}
+          onClick={this.handleInputItemClick}
         >
           <img src={this.state.user && this.state.user.avatar_url} className="cnd-topic-reply__avatar" alt="" />
         </InputItem>
         {/* 评论列表 */}
-        <ReplyList {...this.state} onReplyInputVisible={this.handleInputItemClick}
+        <ReplyList {...this.state} onReplyInputVisible={this.handleReplyInputClick}
           onRefreshTopicDetail={this.handleRefreshTopicDetail}
         />
         {/* 评论bar */}
-        <ReplyBar {...this.state.topic} visible={!this.state.visible} onReplyInputVisible={this.handleInputItemClick} />
+        <ReplyBar {...this.state.topic} visible={!this.state.visible} onReplyInputVisible={this.handleReplyInputClick} />
         {/* 实际评论输入框 */}
         <div
           style={{ 'visibility': this.state.visible ? 'visible' : 'hidden' }}
@@ -219,14 +273,5 @@ class DetailPage extends Component {
     );
   }
 }
-// <DetailMain {...this.state} />
-/*
- <InputItem
-          className="cnd-topic-reply__input-item"
-          placeholder="说说你的想法..."
-          onFocus={this.handleInputItemClick}
-        >
-          <img src="" className="cnd-topic-reply__avatar" alt="" />
-        </InputItem>
-*/
+
 export default DetailPage;

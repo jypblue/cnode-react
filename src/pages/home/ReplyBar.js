@@ -10,10 +10,12 @@ class ReplyBar extends Component {
     };
   }
 
+  // 回复
   handleReplyClick = () => {
     this.props.onReplyInputVisible();
   }
 
+  // 是否收藏
   handleTopicCollect = () => {
     this.setState({
       is_collect: !this.state.is_collect

@@ -194,4 +194,10 @@
   width: 100%;
   background-color: $white;
   z-index: 11;
+  .am-search-synthetic-ph-icon {
+    display: none;
+  }
+  .am-search-value{
+    padding:0 28px 0 15px!important;
+  }
 }

@@ -38,14 +38,9 @@ class ReplyList extends Component {
     return '';
   }
 
-  handleReplyClick(loginname) {
+  handleReplyClick(item) {
     console.log('回复');
-    if (this.props.accesstoken) {
-      this.props.onReplyInputVisible(loginname);
-    } else {
-      // 跳转登录
-      this.props.history.push('/login');
-    }
+    this.props.onReplyInputVisible(item);
   }
 
   async fnGiveThumbsUps(id) {
@@ -89,7 +84,7 @@ class ReplyList extends Component {
                 onClick={this.handleUpsClick.bind(this, item.id)}><i className="iconfont icon-zan-up"></i>
                 {item.ups.length ? <em>{item.ups.length}</em> : '赞'}
               </span>&nbsp;·&nbsp;
-              <span onClick={this.handleReplyClick.bind(this, item.author.loginname)}>回复</span>&nbsp;·&nbsp;
+              <span onClick={this.handleReplyClick.bind(this, item)}>回复</span>&nbsp;·&nbsp;
               <span>{formatDateCount(item.create_at)}</span>
             </div>
           </div>
