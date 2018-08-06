@@ -25,13 +25,15 @@ const barArr = [{
   title: '发布',
   name: 'Publish',
   url: '/publish',
-}, {
-  icon: 'iconfont icon-notice',
-  selectedIcon: '',
-  title: '消息',
-  name: 'Notice',
-  url: '/notice',
-}, {
+},
+// {
+//   icon: 'iconfont icon-notice',
+//   selectedIcon: '',
+//   title: '消息',
+//   name: 'Notice',
+//   url: '/notice',
+// },
+{
   icon: 'iconfont icon-me',
   selectedIcon: '',
   title: '我',

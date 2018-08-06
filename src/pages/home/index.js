@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Tabs, NavBar, ActivityIndicator } from 'antd-mobile';
+import { withRouter } from 'react-router-dom';
 import TabBar from '@/layouts/TabBar';
 import TopicList from './TopicList';
+import request from '@/http';
 import './home.scss';
 
 class TopicHome extends Component {
@@ -44,6 +46,11 @@ class TopicHome extends Component {
     this.handleIsTabLoading = this.handleIsTabLoading.bind(this);
   }
 
+  componentDidMount = () => {
+    this.fnGetMessageCount();
+  }
+
+
   handleTabsChange(tab, index) {
     this.setState({
       curTopic: tab,
@@ -58,11 +65,28 @@ class TopicHome extends Component {
     });
   }
 
+  // 消息通知数量
+  async fnGetMessageCount() {
+    try {
+      const accesstoken = window.localStorage.getItem('cnode_accesstoken') || '';
+      const params = {
+        accesstoken: accesstoken
+      };
+      const result = await request.get('/message/count', params);
+      console.log(result);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   render() {
     return (
       <div className="cnd-home">
         <NavBar mode="dark"
-
+          leftContent={[
+            <i key="0" className="iconfont icon-xiaoxi cnd-icon-xiaoxi"></i>,
+          ]}
+          onLeftClick={() => { this.props.history.push('/notice') }}
           rightContent={
             [<ActivityIndicator key={0} animating={this.state.isTabLoading} />]
           }
@@ -86,4 +110,4 @@ class TopicHome extends Component {
   }
 }
 
-export default TopicHome;
+export default withRouter(TopicHome);
