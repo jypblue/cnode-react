@@ -254,7 +254,7 @@ class DetailPage extends Component {
           onRefreshTopicDetail={this.handleRefreshTopicDetail}
         />
         {/* 评论bar */}
-        <ReplyBar {...this.state.topic} visible={!this.state.visible}
+        <ReplyBar {...this.state.topic} accesstoken={this.state.accesstoken} visible={!this.state.visible}
           onReplyInputVisible={this.handleReplyInputClick}
           onScrollToReplyList={this.handleScrollToReply}
         />

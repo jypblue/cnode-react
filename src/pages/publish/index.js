@@ -107,7 +107,7 @@ class PublishPage extends Component {
           rightContent={[
             <i key="0" className="iconfont icon-publish cnd-icon-publish" onClick={this.handlePublishIconClick} ></i>,
           ]}
-        >主题发布</NavBar>
+        >话题发布</NavBar>
         <List>
           <TextareaItem
             title="标题"
