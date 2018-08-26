@@ -2,7 +2,7 @@
   "name": "antd-demo-h5",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://jypblue.github.io/cnode-react",
+  "homepage": "https://jypblue.github.io/cnode-react",
   "dependencies": {
     "@types/axios": "^0.14.0",
     "@types/lodash": "^4.14.115",
